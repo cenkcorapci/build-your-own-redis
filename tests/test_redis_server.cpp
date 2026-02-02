@@ -8,16 +8,20 @@ int tests_passed = 0;
 int tests_failed = 0;
 
 #define ASSERT_EQ(expected, actual, test_name) \
-    tests_run++; \
-    if ((expected) == (actual)) { \
-        std::cout << "[PASS] " << test_name << std::endl; \
-        tests_passed++; \
-    } else { \
-        std::cout << "[FAIL] " << test_name << std::endl; \
-        std::cout << "  Expected: " << (expected) << std::endl; \
-        std::cout << "  Actual: " << (actual) << std::endl; \
-        tests_failed++; \
-    }
+    do { \
+        tests_run++; \
+        auto exp_val = (expected); \
+        auto act_val = (actual); \
+        if (exp_val == act_val) { \
+            std::cout << "[PASS] " << test_name << std::endl; \
+            tests_passed++; \
+        } else { \
+            std::cout << "[FAIL] " << test_name << std::endl; \
+            std::cout << "  Expected: " << exp_val << std::endl; \
+            std::cout << "  Actual: " << act_val << std::endl; \
+            tests_failed++; \
+        } \
+    } while (0)
 
 void test_redis_server_ping() {
     RedisServer server;
